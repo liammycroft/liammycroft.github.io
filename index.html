@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .constituency {
+            fill: #993399;
+        }
+        .constituency.active {
+            fill: #606;
+        }
+        .background {
+            fill: #fff;
+        }
+
+    </style>
+    
+</head>
+<body>
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <script src="//d3js.org/topojson.v2.min.js"></script>
+    <script>
+var BranchMap = (function() {
+    var width = 960, height = 1160, active = d3.select(null), path, zoom, g;
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+
+    function drawIreland() {
+        d3.json("boundaries.json", function(error, geo) {
+            if (error) throw error;
+            var obj = {type: "GeometryCollection", geometries: geo.objects.boundaries.geometries};
+            var ireland = topojson.feature(geo, obj);
+            console.log(ireland);
+            drawCollection(ireland);
+        });
+    }
+
+    function drawCollection(collection) {
+        var plot = svg.append('g').attr("class", "map-g");
+        g = plot;
+        plot.append("rect")
+            .attr("class", "background")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", width)
+            .attr("height", height)
+            .on("click", reset);   
+        
+        zoom = d3.zoom()
+            .scaleExtent([1,8])
+            .on("zoom", zoomed);
+
+        path = d3.geoPath()
+            .projection(d3.geoMercator()
+            .fitSize([width, height], collection));
+
+        var constituencies = plot.append("g").attr("class","constituencies-g");
+        constituencies.selectAll("path")
+            .data(collection.features)
+            .enter().append("path")
+            .attr("d", path)
+            .attr("class", "constituency feature");
+
+        var features = plot.selectAll(".feature")
+            .on("click", clicked);        
+    }
+
+    function clicked(d) {
+        console.log(d.properties.MAX_CON_NAME);
+        if(active.node() === this) return reset();
+        active.classed("active", false);
+        active = d3.select(this).classed("active", true);
+
+        var bounds = path.bounds(d),
+            dx = bounds[1][0] - bounds[0][0],
+            dy = bounds[1][1] - bounds[0][1],
+            x = (bounds[0][0] + bounds[1][0]) / 2,
+            y = (bounds[0][1] + bounds[1][1]) / 2,
+            scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height))),
+            translate = [width / 2 - scale * x, height / 2 - scale * y];
+        svg.transition().duration(750)
+            .call(zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale));
+    }
+
+    function reset() {
+        active.classed("active", false);
+        active = d3.select(null);
+        svg.transition().duration(750)
+            .call( zoom.transform, d3.zoomIdentity );
+    }
+
+    function zoomed() {
+        g.style("stroke-width", 1.5 / d3.event.transform.k + "px");
+        g.attr("transform", d3.event.transform);
+    }
+
+    return { 
+        DrawIreland: drawIreland 
+    }
+})();   
+
+BranchMap.DrawIreland();
+</script>
+</body>
+</html>
