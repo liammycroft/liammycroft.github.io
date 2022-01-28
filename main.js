@@ -19,7 +19,8 @@ function setupDB() {
 
         request.onsuccess = function (e) {
             db = e.target.result;
-            resolve();
+            updateProcessButton();
+            resolve;
         }
 
         request.onerror = function (e) {
@@ -103,9 +104,14 @@ function handleFileRead(e) {
 }
 
 function updateProcessButton() {
-    let tx = db.transaction(['journals']);
-    let journals = tx.objectStore('journals');
+    return new Promise((resolve, reject) => {
+        let tx = db.transaction(['journals']);
+        let journals = tx.objectStore('journals');
+        let req = journals.count();
 
-    let req = journals.count();
-    req.onsuccess = () => { console.log(req.result) };
+        req.onsuccess = (e) => { 
+            document.querySelector('#filesIndicator').innerHTML = e.target.result;
+            resolve 
+        };
+    })
 }
