@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        body {
+            font-size: .875rem;
+        }
+
+        .feather {
+            width: 16px;
+            height: 16px;
+            vertical-align: text-bottom;
+        }
+
+        /*
+ * Sidebar
+ */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            /* rtl:raw:
+  right: 0;
+  */
+            bottom: 0;
+            /* rtl:remove */
+            left: 0;
+            z-index: 100;
+            /* Behind the navbar */
+            padding: 48px 0 0;
+            /* Height of navbar */
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        }
+
+        @media (max-width: 767.98px) {
+            .sidebar {
+                top: 5rem;
+            }
+        }
+
+        .sidebar-sticky {
+            position: relative;
+            top: 0;
+            height: calc(100vh - 48px);
+            padding-top: .5rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+            /* Scrollable contents if viewport is shorter than content. */
+        }
+
+        .sidebar .nav-link {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .sidebar .nav-link .feather {
+            margin-right: 4px;
+            color: #727272;
+        }
+
+        .sidebar .nav-link.active {
+            color: #2470dc;
+        }
+
+        .sidebar .nav-link:hover .feather,
+        .sidebar .nav-link.active .feather {
+            color: inherit;
+        }
+
+        .sidebar-heading {
+            font-size: .75rem;
+            text-transform: uppercase;
+        }
+
+        /*
+ * Navbar
+ */
+
+        .navbar-brand {
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+            font-size: 1rem;
+            background-color: rgba(0, 0, 0, .25);
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+        }
+
+        .navbar .navbar-toggler {
+            top: .25rem;
+            right: 1rem;
+        }
+
+        .navbar .form-control {
+            padding: .75rem 1rem;
+            border-width: 0;
+            border-radius: 0;
+        }
+
+        .form-control-dark {
+            color: #fff;
+            background-color: rgba(255, 255, 255, .1);
+            border-color: rgba(255, 255, 255, .1);
+        }
+
+        .form-control-dark:focus {
+            border-color: transparent;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar navbar-dark sticky-top bg-dark">
+        <a class="navbar-brand col-md-3 col-lg- me-0 px-3" href="#">liamog's tool</a>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="posistion-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-home" aria-hidden="true">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                                Battle Logs
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Battle Logs</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <input type="file" class="btn btn-sm btn-outline-secondary" id="fileUploadPicker">
+                        </div>
+                        <div class="btn-group me-2">
+                            <button type="button" disabled class="btn btn-sm btn-outline-secondary"
+                                id="fileUploadAdd">Add</button>
+                            <button class="btn btn-secondary" id="processButton" disabled type="button">Process Files
+                                (<span id="filesIndicator">0</span>)</button>
+                        </div>
+                    </div>
+                </div>
+                <!--<h2>Uploaded Logs</h2>-->
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Header</th>
+                                <th scope="col">Header</th>
+                                <th scope="col">Header</th>
+                                <th scope="col">Header</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1,001</td>
+                                <td>random</td>
+                                <td>data</td>
+                                <td>placeholder</td>
+                                <td>text</td>
+                            </tr>
+                            <tr>
+                                <td>1,002</td>
+                                <td>placeholder</td>
+                                <td>irrelevant</td>
+                                <td>visual</td>
+                                <td>layout</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script type="text/javascript">
+        (function () {
+            'use strict';
+
+            setupDB().then(() => populateDB());
+            addDOMEvents();
+
+            // Key for local storage, use to save and access.
+            var FILE_KEY = 'save.json';
+
+            // fire processUpload when the user uploads a file.
+
+            var fleets = [];
+
+            function requestFile() {
+                let transaction = db.transaction('journals');
+                let journals = transaction.objectStore('journals');
+                let request = journals.get(FILE_KEY);
+
+                request.onsuccess = processFile;
+            }
+
+            function processFile() {
+                var contents = this.result;
+                getFleetDetails(contents);
+                var battlelog = contents.battle_log;
+                var battleDetails = { rounds: [] };
+                var battleRoundNumber = 1;
+                var battleRound = null;
+                for (let i = 0; i < battlelog.length; i++) {
+                    const line = battlelog[i];
+                    if (line === -96) battleRound = { round: battleRoundNumber, events: [] };
+                    else if (line === -97) {
+                        battleDetails.rounds.push(battleRound);
+                        battleRoundNumber++;
+                    } else if (line < 0) {
+                        var event = { eventId: line, eventProperties: [] };
+                        battleRound.events.push(event);
+                    } else
+                        battleRound.events[battleRound.events.length - 1].eventProperties.push(line);
+                }
+
+                var processedEvents = processEvents(battleDetails);
+                saveBattleDetails(processedEvents);
+                exportFile(processedEvents);
+            }
+
+            function saveBattleDetails(events) {
+
+            }
+
+            function getFleetDetails(journal) {
+                var foundfleets = jsonpath.query(journal, '$.initiator_fleet_data.deployed_fleets.*');
+                foundfleets = foundfleets.concat(jsonpath.query(journal, '$.target_fleet_data.deployed_fleets.*'));
+                foundfleets.forEach(player => {
+                    fleets.push({
+                        "uid": player.uid,
+                        "ship_Id": player.ship_ids[0],
+                        "hull_Id": player.hull_ids[0]
+                    });
+                }
+                );
+                //console.log(foundfleets);
+            }
+
+            function processEvents(battleDetails) {
+                for (let i = 0; i < battleDetails.rounds.length; i++) {
+                    const round = battleDetails.rounds[i];
+                    for (let j = 0; j < round.events.length; j++) {
+                        const event = round.events[j];
+                        if (event.eventId === -86 || event.eventId === -91) {
+                            round.events[j] = processEvent(event, round.round, round.events[j - 1]);
+                        } else if (event.eventId === -98) {
+                            if (event.eventProperties.length === 1) {
+                                round.events[j] = processEvent(event, round.round, round.events[j - 1], round.events[j + 1])
+                            } else {
+                                round.events[j] = processEvent(event, round.round, round.events[j - 1]);
+                            }
+                        } else {
+                            round.events[j] = processEvent(event, round.round, null);
+                        }
+                    }
+                }
+
+                var finalevents = jsonpath.query(battleDetails, '$.rounds[*].events[?(@.eventId !== -88 && @.eventId !== -90 && @.eventId !== -85 && @.eventId !== -87 && @.eventId !== -99 && @.eventId !== -93 && @.eventId !== -89 && @.eventId !== -92 && @.eventId !== -94 && @.eventId !== -95 )]');
+                return finalevents;
+            }
+
+            function exportFile(finalevents) {
+                let dataStr = JSON.stringify(finalevents);
+                let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+                let exportFileDefaultName = 'data.json';
+
+                let linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+            }
+
+            class BattleLogEvent {
+                eventRound = null;
+                eventId = null;
+                eventShipId = null;
+                eventDesc = null;
+                sourcePlayer = null;
+                sourceShip = null;
+                officerId = null;
+                officerAbilityId = null;
+                officerAbilityRate = null;
+                officerName = null;
+                officerAbility = null;
+                sourceComponent = null;
+                sourceComponentId = null;
+                targetPlayer = null;
+                targetHull = null;
+                targetShield = null;
+                targetMitigation = null;
+                isCritical = null;
+                hullDamage = null;
+                hullRemain = null;
+                shieldDamage = null;
+                shieldRemain = null;
+                mitigated = null;
+                totalDamage = null;
+
+                chargingAmount = null;
+
+                constructor(eventId, eventDesc, eventShipId, eventRound) {
+                    this.eventId = eventId;
+                    this.eventDesc = eventDesc;
+                    this.eventShipId = eventShipId;
+                    this.sourcePlayer = getUidByShipId(eventShipId);
+                    //this.sourceShip = getShipByByShipId(eventShipId);
+                    this.eventRound = eventRound;
+                }
+
+                addOfficerProc = function (officerId, officerAbilityId, rate) {
+                    this.officerId = officerId;
+                    this.officerAbilityId = officerAbilityId;
+                    this.officerAbilityRate = rate;
+
+                    //var officer = await getOfficer(officerId);
+                    //this.officerName = officer.officerName;
+                    //this.officerAbility = getOfficerAbility(officer, officerAbilityId);
+                }
+
+                addAttack = function (sourceComponent, targetShipId, isCritical, hullDamage, hullRemain, shieldDamage, shieldRemain, mitigated) {
+                    this.sourceComponentId = sourceComponent;
+                    //this.sourceComponent = getShipComponentById(this.sourceShip, sourceComponent);
+                    this.targetPlayer = getUidByShipId(targetShipId);
+                    this.targetHull = hullDamage + hullRemain;
+                    this.targetShield = shieldDamage + shieldRemain;
+                    this.targetMitigation = mitigated / (mitigated + hullDamage + shieldDamage);
+                    this.isCritical = isCritical;
+                    this.hullDamage = hullDamage;
+                    this.hullRemain = hullRemain;
+                    this.shieldDamage = shieldDamage;
+                    this.shieldRemain = shieldRemain;
+                    this.mitigated = mitigated;
+                    this.totalDamage = hullDamage + mitigated + shieldDamage;
+                }
+
+                addCharging = function (sourceComponent, chargingAmount) {
+                    this.sourceComponentId = sourceComponent;
+                    //this.sourceComponent = getShipComponentById(this.sourceShip, sourceComponent);
+                    this.chargingAmount = chargingAmount;
+                }
+            }
+
+            function processEvent(event, round, ownerevent, nextevent) {
+                switch (event.eventId) {
+                    case -86:
+                    case -91:
+                        // if (!officers.find(officer => officer.officerId == event.eventProperties[0] && officer.officerAbilityId == event.eventProperties[1]))
+                        //     officers.push({
+                        //         "officerId": event.eventProperties[0],
+                        //         "officerAbilityId": event.eventProperties[1]
+                        //     });
+                        var ble = new BattleLogEvent(event.eventId, "Officer Proc", ownerevent.eventProperties[0], round);
+                        ble.addOfficerProc(event.eventProperties[0], event.eventProperties[1], event.eventProperties[2]);
+                        return ble;
+                    case -98:
+                        if (event.eventProperties.length > 1) {
+                            var ble = new BattleLogEvent(event.eventId, "Attack", ownerevent.eventProperties[0], round);
+                            ble.addAttack(event.eventProperties[0], event.eventProperties[1], event.eventProperties[5], event.eventProperties[6], event.eventProperties[7], event.eventProperties[8], event.eventProperties[9], event.eventProperties[10]);
+                            return ble;
+                        } else {
+                            var ble = new BattleLogEvent(event.eventId, "Attack Charging", ownerevent.eventProperties[0], round);
+                            ble.addCharging(event.eventProperties[0], nextevent.eventProperties[0])
+                            return ble;
+                        }
+                    default:
+                        return event;
+                }
+            }
+
+            function getUidByShipId(shipId) {
+                var foundShip = fleets.find(obj => obj.ship_Id == shipId);
+                if (foundShip !== undefined) return foundShip.uid;
+                return shipId;
+            }
+
+            //
+            //async function getShipByByShipId(shipId) {
+            //    return new Promise(function (resolve, reject) {
+            //        let transaction = db.transaction('ships');
+            //        let ships = transaction.objectStore('ships');
+            //
+            //        let request = ships.get(shipId);
+            //        request.onsuccess = function () { resolve(request.result); }
+            //    });
+            //}
+            //
+            //async function getOfficer(officerId) {
+            //    return new Promise(function (resolve, reject) {
+            //        let transaction = db.transaction('officers');
+            //        let officers = transaction.objectStore('officers');
+            //
+            //        let request = officers.get(officerId);
+            //        request.onsuccess = function () {
+            //            if(request.result !== undefined) resolve(request.result);
+            //            else resolve({"officerId": officerId, "officerName": "UNKNOWN"});
+            //        }
+            //    });
+            //
+            //
+            //
+            //    request.onsuccess()
+            //
+            //
+            //    if (officer.officerName !== undefined) return officer;
+            //    else {
+            //        officer.officerName = officerId;
+            //        return officer;
+            //    }
+            //}
+            //function getOfficerAbility(officer, officerAbilityId) {
+            //    if (officer.officerAbilities !== undefined) {
+            //        var ability = officer.officerAbilities.find(a => a.officerAbilityId == officerAbilityId);
+            //        if (ability !== undefined) return ability.officerAbility;
+            //    }
+            //    return officerAbilityId
+            //};
+            //function getShipComponentById(shipName, shipComponentId) {
+            //    //var ship = ships.find(s => s.shipName == shipName);
+            //    //if (ship !== undefined) {
+            //    //    var shipComponent = ship.shipComponents.find(sc => sc.shipComponentId == shipComponentId);
+            //    //    if (shipComponent !== undefined) return shipComponent.shipComponent;
+            //    //}
+            //    return shipComponentId;
+            //}
+        }
+        )();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jsonpath@1.1.1/jsonpath.min.js"></script>
+    <script src="https://cdn.rawgit.com/dcodeIO/protobuf.js/6.X.X/dist/protobuf.min.js"></script>
+</body>
+
+</html>
