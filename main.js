@@ -111,7 +111,8 @@ function updateProcessButton() {
 
         req.onsuccess = (e) => { 
             document.querySelector('#filesIndicator').innerHTML = e.target.result;
-            resolve 
+            document.querySelector('#processButton').disabled = e.target.result == 0;
+            resolve;
         };
     })
 }
